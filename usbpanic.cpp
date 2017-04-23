@@ -102,7 +102,13 @@ int main(int argc, char** argv){
     struct sigaction sa;
     ButtonResult* result;
     notEnding=1;
-    
+
+    /*
+     * -d : debug (interactive mode, no daemonize)
+     * -h : usage and version
+     * -f : alternate configuration file
+     */
+
     if (argc==2){
         if ((argv[1][0]=='-')&&(argv[1][1]=='i')) {
             printf ("interactive mode\n");
@@ -113,7 +119,7 @@ int main(int argc, char** argv){
     if (!interactiveMode) daemonize();
     
     // Open Syslog communication
-    openlog( DAEMON_NAME, LOG_PID, LOG_LOCAL5 );
+    openlog( DAEMON_NAME, LOG_PID, LOG_LOCAL5 ); /* LOG_CONS */
     syslog( LOG_INFO, "starting" );
 
 
