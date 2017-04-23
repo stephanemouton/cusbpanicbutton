@@ -1,26 +1,21 @@
 
 
--# README #
+-# C++ USB panic button management #
 
--
 
--This README would normally document whatever steps are necessary to get your application up and running.
-
--
-
--### What is this repository for? ###
+-### Summary ###
 
 -
 
 -* Quick summary
 
--* Version
+-* 2.5
 
--* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+![USB panic button](./usbpanicbutton.jpg)
 
 -
 
--### How do I get set up? ###
+-### Installation ###
 
 -
 
@@ -30,6 +25,10 @@
 
 -* Dependencies
 
+-lusb
+
+iniparser
+
 -* Database configuration
 
 -* How to run tests
@@ -38,17 +37,12 @@
 
 -
 
--### Contribution guidelines ###
+-### How touse ###
 
 -
 
--* Writing tests
+-* to do
 
--* Code review
-
--* Other guidelines
-
--
 
 -### Who do I talk to? ###
 
@@ -57,4 +51,12 @@
 -* Repo owner or admin
 
 -* Other community or team contact
+
+## Contributions ##
+http://ndevilla.free.fr/iniparser/
+
+-### License ###
+This software is released under MIT License. See LICENSE for full informations
+
+
 

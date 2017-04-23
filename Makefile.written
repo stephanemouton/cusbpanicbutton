@@ -1,0 +1,27 @@
+# Makefile
+CXX=g++
+
+LIBS=-lusb
+
+all: usbpanic libiniparser.a
+
+libiniparser.a:
+	(cd iniparser; make)
+
+usbpanic : usbpanic.o usbdriver.o parameters.o libiniparser.a
+	$(CXX) -Wall $(LIBS) -o usbpanic usbpanic.o usbdriver.o parameters.o iniparser/libiniparser.a
+
+usbpanic.o : usbpanic.cpp
+	$(CXX) -Wall -c usbpanic.cpp
+
+usbdriver.o : usbdriver.cpp
+	$(CXX) -Wall -c usbdriver.cpp
+
+parameters.o : parameters.cpp
+	$(CXX) -Wall -c parameters.cpp
+
+install: server client
+	mv server client ${INSTDIR}
+ 
+clean:
+	-rm -f server.o client.o core
