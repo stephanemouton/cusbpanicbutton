@@ -1,0 +1,14 @@
+#
+# Configuration file for USB panic button
+#
+[Global]
+# Period expressed in ms
+scanperiod = 1000 ;
+# asynchronous [true/false] (default=true)
+asynchronous   = true ;
+
+[Action]
+# This script is launched when no button specific script is found
+defaultscript  = /usr/bin/yes ;
+#script0 = "date >> /tmp/panic_button_log";
+script0 = "/sbin/halt";

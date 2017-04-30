@@ -12,7 +12,7 @@
 #include <syslog.h>
 
 extern "C" {
-#include "iniparser/src/iniparser.h"
+#include "../iniparser/src/iniparser.h"
 }
     
 Parameters::Parameters(){

@@ -1,27 +1,43 @@
-# Makefile
-CXX=g++
+#
+# cusbpanicbutton Makefile
+#
 
-LIBS=-lusb
+# Compiler settings
+CXX     = g++
+CFLAGS  = -O2 -fPIC -Wall -ansi -pedantic
 
+# Linker settings
+LIBS    = -lusb
+LDFLAGS = -Wall
+BUILD   = build/usbpanic
+
+# other settings
+INSTDIR = /usr/local/bin
+RM      = rm -f
+
+# Implicit rules
+COMPILE.cpp=$(CXX) $(CFLAGS) -c
+.cpp.o:
+	@(echo "compiling $< ...")
+	@($(COMPILE.cpp) -o $@ $<)
+
+SRCS = src/parameters.cpp \
+	   src/usbdriver.cpp \
+	   src/usbpanic.cpp
+
+OBJS = $(SRCS:.cpp=.o)
+
+# Main target
 all: usbpanic libiniparser.a
 
 libiniparser.a:
 	(cd iniparser; make)
 
-usbpanic : usbpanic.o usbdriver.o parameters.o libiniparser.a
-	$(CXX) -Wall $(LIBS) -o usbpanic usbpanic.o usbdriver.o parameters.o iniparser/libiniparser.a
+usbpanic : $(OBJS) libiniparser.a
+	$(CXX) $(LDFLAGS) $(LIBS) -o $(BUILD) $(OBJS) iniparser/libiniparser.a
 
-usbpanic.o : usbpanic.cpp
-	$(CXX) -Wall -c usbpanic.cpp
-
-usbdriver.o : usbdriver.cpp
-	$(CXX) -Wall -c usbdriver.cpp
-
-parameters.o : parameters.cpp
-	$(CXX) -Wall -c parameters.cpp
-
-install: server client
-	mv server client ${INSTDIR}
+install: $(BUILD)
+	mv $(BUILD) ${INSTDIR}
  
 clean:
-	-rm -f server.o client.o core
+	$(RM) $(OBJS) $(BUILD)
