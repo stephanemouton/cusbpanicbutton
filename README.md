@@ -44,7 +44,7 @@ The configuration file follow structure of .INI files
  
 More details about syntax can be found in documentation of [iniparser parser library](./iniparser/html/index.html)
 
-An sample of configuration file is provided: see [usbpanic.conf.example](./usbpanic.con.example)
+An sample of configuration file is provided: see [usbpanic.conf.example](./usbpanic.conf.example)
 
 ### Parameters ###
 
