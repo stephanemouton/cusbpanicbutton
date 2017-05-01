@@ -11,6 +11,10 @@
 #ifndef _PARAMETERS_HPP
 #define	_PARAMETERS_HPP
 
+#define DEFAULT_SCAN_PERIOD 1000
+#define DEFAULT_LAUNCH_MODE 1  /* asynchronous launch */
+#define DEFAULT_SCRIPT      "/bin/true"
+
 #include <string>
 using namespace std ;
 /*

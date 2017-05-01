@@ -46,8 +46,8 @@ const char * Parameters::getScriptName(unsigned int index){
 
 int Parameters::load(char * fileName){
     parameterFileName=fileName;
-    
-    dictionary	*	ini ;    
+
+    dictionary	*	ini ;
     ini = iniparser_load(fileName);
     if (ini==NULL) {
             syslog( LOG_ERR, "cannot parse file: %s\n", fileName);
@@ -55,11 +55,11 @@ int Parameters::load(char * fileName){
     }
     
     /* Get global attributes */
-    scanperiod = iniparser_getint(ini, "global:scanperiod", 1000);
-    asynchronous = iniparser_getboolean(ini, "global:asynchronous", 1);
+    scanperiod = iniparser_getint(ini, "global:scanperiod", DEFAULT_SCAN_PERIOD);
+    asynchronous = iniparser_getboolean(ini, "global:asynchronous", DEFAULT_LAUNCH_MODE);
     
     /* Get Action attributes */
-    script = iniparser_getstring(ini, "action:defaultscript", (char *)"/bin/true");
+    script = iniparser_getstring(ini, "action:defaultscript", (char *)DEFAULT_SCRIPT);
 
     syslog( LOG_INFO, "scanperiod: %d\n", scanperiod);
     syslog( LOG_INFO, "defaultscript: %s\n", script.c_str());

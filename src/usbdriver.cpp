@@ -88,8 +88,6 @@ int USBDriver::getNumberButtons(void){
 }
 
 ButtonResult* USBDriver::requestButtonStatus(void){
-    syslog( LOG_ERR,"In button status...\n");
-
     result.total=0;
     result.numberPressed=0;
     unsigned char read=0;
@@ -117,7 +115,7 @@ ButtonResult* USBDriver::requestButtonStatus(void){
 
 
 void USBDriver::close(void){
-    // the following momory space was allocated in init
+    // the following memory space was allocated in init
     free(result.value);
     // Cleanly close USB communication
     int count = devs.end()-devs.begin();

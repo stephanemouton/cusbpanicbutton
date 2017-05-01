@@ -12,32 +12,48 @@ It is possible to drive several panic buttons at once using usbpanic.
 
 ## Build & installation ##
 ### Dependencies ###
-The libusb library must be installed to run
+The libusb library must be installed to run.
+
 Development version of libusb needs also to be deployed in order to buld usbpanic (directive -l usb is used during build)
+
 This software relies on iniparser library.
 
 ### Build ###
 To compile usbpanic, just type
+
 `make -f Makefile.written`
+
 The resulting executable is in the build directory.
 
 ### Deployment instructions ###
 Install in /usr/local/bin using Makefile
+
 `make -f Makefile.written install`
 
 ## How to use ##
 
+Launch the daemon at startup (systemd file provided) after having prepared a configuration file
 
-* Configuration
+Default location of configuration file is /etc/usbpanic.conf
+
+This value can be overridden with -f parameters
+
+### Content of configuration file ###
+
+The configuration file follow structure of .INI files
+ 
+More details about syntax can be found in documentation of []iniparser parser library](.iniparser/html/index.html)
 
 
 ## Contact & Contributions ##
 
 This software was started in 2007 in order to be used at review of AssessGrid EU FP6 project
+
 For any question, contact stephane@mouton.com
 
 This software uses iniparser library written by Nicolas Devilla.
-Mare info at http://ndevilla.free.fr/iniparser/
+
+More info at http://ndevilla.free.fr/iniparser/
 
 ### Related projects and documentation ###
 
