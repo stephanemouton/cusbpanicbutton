@@ -38,12 +38,27 @@ Default location of configuration file is /etc/usbpanic.conf
 
 This value can be overridden with -f parameters
 
-### Content of configuration file ###
+## Configuration ##
 
 The configuration file follow structure of .INI files
  
-More details about syntax can be found in documentation of []iniparser parser library](.iniparser/html/index.html)
+More details about syntax can be found in documentation of [iniparser parser library](./iniparser/html/index.html)
 
+An sample of configuration file is provided: see [usbpanic.conf.example](./usbpanic.con.example)
+
+### Parameters ###
+
+The configuration file is divided into two sections : the Global and the Action one.
+
+[Global] section contains _daemons_'settings
+* scanperiod (int): amount of time in milliseconds between two polls of button status (defaut: 1000)
+* asynchronous (boolean): define if actions on button press are launched asynchronously or not (default is true)
+
+[Action] section gathers definition of action to execute on button press
+* defaultscript (string): command or script to launch when no button specific action is defined (defaut: /bin/true)
+* scriptX where X is button number (0, 1, ...) (string): action to perform when button X is pressed.
+ 
+Please note that it is not possible to reliably guess buttons number before plugin and testing them.   
 
 ## Contact & Contributions ##
 
