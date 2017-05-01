@@ -3,44 +3,38 @@
 ## Summary ##
 * version 2.5
 
-The usbpanic _daemon_ allows to use the gadget USB panic button (see below) identified by Vendor_ID:Product_ID 0x1130:0x0202under linux.
+The usbpanic _daemon_ allows to use the gadget USB panic button (see below) identified by Vendor ID & Product_ID (0x1130:0x0202) under linux.
+
 ![USB panic button](./usbpanicbutton.jpg)
+
 A command is associated to a button press using configuration file and is launched synchronously or in background.
 It is possible to drive several panic buttons at once using usbpanic.
 
 ## Build & installation ##
 ### Dependencies ###
 The libusb library must be installed to run
-Development version of libusb needs also to be deployed in order to buld usbpanic (directive -l usb is ued during build)
+Development version of libusb needs also to be deployed in order to buld usbpanic (directive -l usb is used during build)
+This software relies on iniparser library.
 
 ### Build ###
+To compile usbpanic, just type
+`make -f Makefile.written`
+The resulting executable is in the build directory.
 
+### Deployment instructions ###
+Install in /usr/local/bin using Makefile
+`make -f Makefile.written install`
 
-
--lusb
-
-iniparser
-
-
-* Deployment instructions
-
--
-
-### How to use ###
+## How to use ##
 
 
 * Configuration
 
 
-### Who do I talk to? ###
+## Contact & Contributions ##
 
-
-
-* Repo owner or admin
-
-* Other community or team contact
-
-## Contributions ##
+This software was started in 2007 in order to be used at review of AssessGrid EU FP6 project
+For any question, contact stephane@mouton.com
 
 This software uses iniparser library written by Nicolas Devilla.
 Mare info at http://ndevilla.free.fr/iniparser/
