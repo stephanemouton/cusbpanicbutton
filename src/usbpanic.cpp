@@ -10,7 +10,7 @@
 
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
-#define DAEMON_NAME "usbpanic"
+#define DAEMON_NAME "usbpanicbutton"
 #define CONFIGURATION_FILE "/etc/usbpanic.conf"
 
 #include <cstdio>

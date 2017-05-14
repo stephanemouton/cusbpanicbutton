@@ -7,9 +7,10 @@ CXX     = g++
 CFLAGS  = -O2 -fPIC -Wall -ansi -pedantic
 
 # Linker settings
+EXE     = usbpanicbutton
 LIBS    = -lusb
 LDFLAGS = -Wall
-BUILD   = build/usbpanic
+BUILD   = build/$(EXE)
 
 # other settings
 INSTDIR = /usr/local/bin
@@ -28,12 +29,12 @@ SRCS = src/parameters.cpp \
 OBJS = $(SRCS:.cpp=.o)
 
 # Main target
-all: usbpanic libiniparser.a
+all: $(EXE) libiniparser.a
 
 libiniparser.a:
 	(cd iniparser; make)
 
-usbpanic : $(OBJS) libiniparser.a
+$(EXE) : $(OBJS) libiniparser.a
 	$(CXX) $(LDFLAGS) $(LIBS) -o $(BUILD) $(OBJS) iniparser/libiniparser.a
 
 install: $(BUILD)

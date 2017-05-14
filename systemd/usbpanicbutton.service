@@ -1,0 +1,14 @@
+# systemd service description for USB Panic Button management
+# To be installed in /lib/systemd/system
+[Unit]
+Description=USB Panic Button Management Service
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/usbpanicbutton
+StandardOutput=null
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
+Alias=usbpanicbutton.service
