@@ -10,8 +10,9 @@
 
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
-#define DAEMON_NAME "usbpanicbutton"
-#define CONFIGURATION_FILE "/etc/usbpanic.conf"
+#define DAEMON_NAME "usbpanic"
+#define VERSION "2.5"
+#define DEFAULT_CONFIGURATION_FILE "/etc/usbpanic.conf"
 
 #include <cstdio>
 #include <stdlib.h>
@@ -76,7 +77,7 @@ void signalHandler(int signal){
         case SIGHUP :
             syslog(LOG_INFO, "Caught SIGHUP, re-reading parameters\n");
             // re-read parameters from /etc/usbpanic.conf
-            parameters.load((char *)CONFIGURATION_FILE);
+            parameters.load((char *)DEFAULT_CONFIGURATION_FILE);
         break;
         case SIGINT  :
         case SIGQUIT :
@@ -98,35 +99,74 @@ int main(int argc, char** argv){
     pid_t pid;
     int exitStatus;
     unsigned int j;
-    int interactiveMode=0;
+    char interactiveMode=0;
+    char helpMode=0;
+    char displayVersion=0;
+    char* fileName;
     struct sigaction sa;
     ButtonResult* result;
     notEnding=1;
+    int option=0;
+    int logopt = LOG_PID;
+
+    fileName = (char *)DEFAULT_CONFIGURATION_FILE;
 
     /*
      * -d : debug (interactive mode, no daemonize)
-     * -h : usage and version
+     * -h : version
+     * -h : usage
      * -f : alternate configuration file
      */
-
-    if (argc==2){
-        if ((argv[1][0]=='-')&&(argv[1][1]=='i')) {
-            printf ("interactive mode\n");
-            interactiveMode=1;
+    while ((option = getopt (argc, argv, "dhvf:")) != -1)
+        switch (option){
+        case 'd':
+            interactiveMode = 1;
+            break;
+        case 'h':
+            helpMode = 1;
+            break;
+        case 'v':
+            displayVersion = 1;
+            break;
+        case 'f':
+            fileName = optarg;
+            break;
+        default:
+            abort ();
         }
+
+    if (displayVersion){
+        printf("%s USB panic button manager, Version %s\n", argv[0], VERSION);
+        exit(EXIT_SUCCESS);
     }
+
+    if (helpMode){
+        printf("usbpanic, version %s. Service to manage USB panic buttons with USB ID 1130:0202\n",VERSION);
+        printf("Usage: usbpanic [OPTIONS]\n");
+        printf("Options\n");
+        printf("-h print this help and exit\n");
+        printf("-v print version and exit\n");
+        printf("-d debug mode, launch program in display mode (remain connected to console)\n");
+        printf("-f FILE change configuration file (default is %s)\n",DEFAULT_CONFIGURATION_FILE);
+        exit(EXIT_SUCCESS);
+    }
+
     // Cleanly run the program as a daemon
     if (!interactiveMode) daemonize();
-    
+
+    // Display also syslog messages in console
+    if (interactiveMode) logopt|=LOG_PERROR;
+
     // Open Syslog communication
-    openlog( DAEMON_NAME, LOG_PID, LOG_LOCAL5 ); /* LOG_CONS */
-    syslog( LOG_INFO, "starting" );
+    openlog( DAEMON_NAME, logopt, LOG_LOCAL5 );
+    syslog( LOG_INFO, "Starting" );
 
-
-    // TODO: test if cnfiguration file exists
-    
-    // read parameters from /etc/usbpanic.conf
-    parameters.load((char *)CONFIGURATION_FILE);
+    // read parameters from configuration file
+    if(access(fileName,R_OK) == -1){
+        syslog( LOG_ERR, "Unable to open configuration file %s",fileName );
+        exit(EXIT_FAILURE);
+    }
+    parameters.load(fileName);
     
     // init USB communication
     USBDriver driver;
