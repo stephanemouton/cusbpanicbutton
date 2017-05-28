@@ -1,10 +1,10 @@
 # systemd service description for USB Panic Button management
-# To be installed in /lib/systemd/system
+# To be installed in /etc/systemd/system
 [Unit]
 Description=USB Panic Button Management Service
 
 [Service]
-Type=forking
+Type=simple
 ExecStart=/usr/local/bin/usbpanicbutton
 StandardOutput=null
 # usbpanicbutton is starting a child process as expected for standard services
